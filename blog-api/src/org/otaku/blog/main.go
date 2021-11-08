@@ -1,13 +1,15 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-
+	"org/otaku/blog/controller"
 	"org/otaku/blog/router"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
+	controller.InitController()
 	router.InitRouter(r)
 	r.Run()
 }

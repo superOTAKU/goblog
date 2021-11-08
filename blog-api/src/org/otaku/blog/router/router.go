@@ -30,7 +30,7 @@ func InitRouter(router *gin.Engine) error {
 		routerConfig := routerMap[path]
 		handlerFunc := routerConfig.HandlerFunc
 		if routerConfig.NeedAuthenticated {
-			handlerFunc = auth.AddAuth(handlerFunc)
+			handlerFunc = auth.AddAuthIntercepter(handlerFunc)
 		}
 		switch method := strings.ToLower(routerConfig.Method); method {
 		case "get":
