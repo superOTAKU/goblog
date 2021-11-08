@@ -8,26 +8,37 @@ import (
 
 //错误信息结构体
 type ErrorObject struct {
-	Status int
-	Code   int
-	Msg    string
+	Code int
+	Msg  string
 }
 
 var ParamError = ErrorObject{
-	Status: http.StatusBadRequest,
-	Code:   1,
-	Msg:    "param error",
+	Code: 1,
+	Msg:  "param error",
 }
 
-func ReplyError(c *gin.Context, errorObject ErrorObject) {
-	c.JSON(errorObject.Status, gin.H{
-		"code": errorObject.Code,
-		"msg":  errorObject.Msg,
+var AuthenticationError = ErrorObject{
+	Code: 2,
+	Msg:  "authentication error",
+}
+
+func ReplyError(c *gin.Context, status int, errorObject ErrorObject, msg string) {
+	errorObj := ErrorObject{}
+	errorObj.Code = errorObject.Code
+	errorObj.Msg = errorObject.Msg
+	if msg != "" {
+		errorObj.Msg = ""
+	}
+	c.JSON(status, gin.H{
+		"code": errorObj.Code,
+		"msg":  errorObj.Msg,
 	})
 }
 
-func ReplyParamError(c *gin.Context, msg string) {
-	var errorObject = ParamError
-	errorObject.Msg = msg
-	ReplyError(c, errorObject)
+func Reply400Error(c *gin.Context, errorObject ErrorObject, msg string) {
+	ReplyError(c, http.StatusBadRequest, errorObject, msg)
+}
+
+func Reply403Error(c *gin.Context, errorObject ErrorObject, msg string) {
+	ReplyError(c, http.StatusForbidden, errorObject, msg)
 }

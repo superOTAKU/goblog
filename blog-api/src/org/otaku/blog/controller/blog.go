@@ -12,7 +12,7 @@ import (
 func getBlog(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		rest.ReplyParamError(c, "id illegal!")
+		rest.Reply400Error(c, rest.ParamError, "id illegal!")
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"id":      id,

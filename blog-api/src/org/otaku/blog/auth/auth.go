@@ -1,8 +1,9 @@
 package auth
 
 import (
-	"github.com/gin-gonic/gin"
 	"org/otaku/blog/rest"
+
+	"github.com/gin-gonic/gin"
 )
 
 var AuthHeader = "Authentication"
@@ -12,9 +13,13 @@ func AddAuthIntercepter(handlerFunc gin.HandlerFunc) gin.HandlerFunc {
 		//do auth
 		authenticated := false
 		authHeader := c.GetHeader(AuthHeader)
-		
+
+		if authHeader != "" {
+			authenticated = true
+		}
+
 		if !authenticated {
-			rest.ReplyError()
+			rest.Reply403Error(c, rest.AuthenticationError, "")
 			return
 		}
 		//other function
