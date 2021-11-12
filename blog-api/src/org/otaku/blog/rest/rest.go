@@ -22,12 +22,17 @@ var AuthenticationError = ErrorObject{
 	Msg:  "authentication error",
 }
 
+var BussinessError = ErrorObject{
+	Code: 3,
+	Msg:  "bussiness error",
+}
+
 func ReplyError(c *gin.Context, status int, errorObject ErrorObject, msg string) {
 	errorObj := ErrorObject{}
 	errorObj.Code = errorObject.Code
 	errorObj.Msg = errorObject.Msg
 	if msg != "" {
-		errorObj.Msg = ""
+		errorObj.Msg = msg
 	}
 	c.JSON(status, gin.H{
 		"code": errorObj.Code,

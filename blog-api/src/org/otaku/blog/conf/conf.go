@@ -17,7 +17,7 @@ func GetInt(key string) int {
 }
 
 func init() {
-	conf["DbUrl"] = "root:root@tcp(127.0.0.1:3306)/blog?charset=utf8mb4&parseTime=True&loc=Local"
+	conf["DbUrl"] = "root:root@tcp(127.0.0.1:3306)/blog?charset=utf8mb4&parseTime=True&loc=UTC"
 	conf["MaxIdle"] = "10"
 	conf["MaxOpen"] = "100"
 }
