@@ -6,6 +6,7 @@ import (
 	"org/otaku/blog/rest"
 	"org/otaku/blog/router"
 	"org/otaku/blog/service"
+	"org/otaku/blog/util"
 
 	"github.com/gin-gonic/gin"
 )
@@ -37,17 +38,35 @@ func register(c *gin.Context) {
 	}
 }
 
+//刷新token，目前简单返回一个新的token
+func refreshToken(c *gin.Context) {
+	if token, err := util.GenJWTToken(c.GetUint64("UserId")); err == nil {
+		c.JSON(http.StatusOK, dto.AccessToken{
+			Token: token,
+		})
+		return
+	}
+	rest.Reply400Error(c, rest.BussinessError, "")
+}
+
 func init() {
 	router.AddRouterConfig(router.RouteConfig{
-		Path: "/login",
+		Path:              "/login",
 		HandlerFunc:       login,
 		Method:            "POST",
 		NeedAuthenticated: false,
 	})
 	router.AddRouterConfig(router.RouteConfig{
-		Path: "/register",
+		Path:              "/register",
 		HandlerFunc:       register,
 		Method:            "POST",
 		NeedAuthenticated: false,
 	})
+	router.AddRouterConfig(router.RouteConfig{
+		Path:              "/refreshToken",
+		HandlerFunc:       refreshToken,
+		Method:            "POST",
+		NeedAuthenticated: true,
+	})
+
 }
