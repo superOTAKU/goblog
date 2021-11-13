@@ -38,12 +38,14 @@ func register(c *gin.Context) {
 }
 
 func init() {
-	router.AddRouterConfig("/login", router.RouteConfig{
+	router.AddRouterConfig(router.RouteConfig{
+		Path: "/login",
 		HandlerFunc:       login,
 		Method:            "POST",
 		NeedAuthenticated: false,
 	})
-	router.AddRouterConfig("/register", router.RouteConfig{
+	router.AddRouterConfig(router.RouteConfig{
+		Path: "/register",
 		HandlerFunc:       register,
 		Method:            "POST",
 		NeedAuthenticated: false,
