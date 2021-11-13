@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"org/otaku/blog/rest"
 	"org/otaku/blog/router"
@@ -14,6 +15,8 @@ func getBlog(c *gin.Context) {
 	if err != nil {
 		rest.Reply400Error(c, rest.ParamError, "id illegal!")
 	}
+	userId := c.GetUint64("UserId")
+	fmt.Printf("userId is %d\n", userId)
 	c.JSON(http.StatusOK, gin.H{
 		"id":      id,
 		"content": "My first blog!",

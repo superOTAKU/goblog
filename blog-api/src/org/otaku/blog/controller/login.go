@@ -18,7 +18,7 @@ func login(c *gin.Context) {
 		return
 	}
 	//调用service登录
-	accessToken, err := service.Login(&loginReq)
+	accessToken, err := service.LoginService.Login(&loginReq)
 	if err != nil {
 		rest.Reply400Error(c, rest.BussinessError, err.Error())
 		return
@@ -32,7 +32,7 @@ func register(c *gin.Context) {
 		rest.Reply400Error(c, rest.ParamError, err.Error())
 		return
 	}
-	if err := service.Register(&registerReq); err != nil {
+	if err := service.LoginService.Register(&registerReq); err != nil {
 		rest.Reply400Error(c, rest.BussinessError, err.Error())
 	}
 }
