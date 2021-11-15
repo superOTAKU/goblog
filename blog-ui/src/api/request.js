@@ -16,14 +16,10 @@ service.interceptors.request.use(requestConfig => {
     //其他请求，带上token访问（getter负责判断过期时间）
     let token = store.getters.token
     if (token) {
-        payload = jwtDecode(jwtToken)
-        if (payload.exp < Date.now()) {
-            return requestConfig;
-        }
         requestConfig.headers['Authentication'] = jwtToken
     }
 }, error => {
-
+    console.log("request error", error)
 })
 
 export default service

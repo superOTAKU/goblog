@@ -8,3 +8,17 @@ export function refreshToken(jwtToken) {
         }
     })
 }
+
+export function login(username, password) {
+    return service.post({
+        url: '/login',
+        data: {username, password}
+    })
+}
+
+export function register(username, password) {
+    return service.post({
+        url: '/register',
+        data: {username, password}
+    })
+}
